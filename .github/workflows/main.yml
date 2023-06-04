@@ -1,0 +1,23 @@
+name: Build on Raspberry Pi
+
+on:
+  ## Triggers the workflow on push or pull request events but only for the master branch
+  # push:
+    # branches: [ master ]
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Print working directory
+        run: pwd
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore -o ~/Public/personal_website/webapi
