@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-webapi:
     runs-on: self-hosted
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -21,3 +21,18 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore -o ~/Public/personal_website/webapi
+
+  build-vue:
+    runs-on: self-hosted
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Print working directory
+        run: pwd
+      - name: Install dependencies
+        run: npm install 
+      - name: Build
+        run: npm run build
+      - name: Copy build files
+        run: cp -r dist /home/pi/Public/personal_website/UI
