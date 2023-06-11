@@ -1,0 +1,26 @@
+name: WebAPI on Raspberry Pi
+
+on:
+  ## Triggers the workflow on push or pull request events but only for the master branch
+  # push:
+    # branches: [ master ]
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-webapi:
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: WebApi
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Print working directory
+        run: pwd
+      - name: Install dependencies
+        run: dotnet restore merkithuseyin.sln
+      - name: Build
+        run: dotnet build merkithuseyin.sln --configuration Release --no-restore -o ~/Public/personal_website/webapi

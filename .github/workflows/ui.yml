@@ -1,4 +1,4 @@
-name: Build on Raspberry Pi
+name: UI on Raspberry Pi
 
 on:
   ## Triggers the workflow on push or pull request events but only for the master branch
@@ -9,21 +9,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-webapi:
-    runs-on: self-hosted
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      - name: Print working directory
-        run: pwd
-      - name: Install dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore -o ~/Public/personal_website/webapi
-
   build-vue:
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: UI
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
