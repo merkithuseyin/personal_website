@@ -13,7 +13,11 @@ namespace WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddHealthChecks();
+
             var app = builder.Build();
+
+            app.MapHealthChecks("/healthz");
 
             app.UseSwagger();
             app.UseSwaggerUI();
